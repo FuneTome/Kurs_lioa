@@ -1,0 +1,4 @@
+﻿  main_file.cpp
+C:\Users\MSI-pc\Documents\GitHub\Kurs_lioa\kursach\main_file.cpp(41,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\MSI-pc\Documents\GitHub\Kurs_lioa\kursach\main_file.cpp(62,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  kursach.vcxproj -> C:\Users\MSI-pc\Documents\GitHub\Kurs_lioa\kursach\x64\Debug\kursach.exe
