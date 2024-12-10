@@ -45,7 +45,7 @@ void creatG() {
 			if (rand() % 11 > 5) u.push_back(i + 1);
 			else v.push_back(i + 1);
 		}
-		if (v.size() < 1 || u.size() < 1) { u.clear(); v.clear(); continue; }
+		if (v.size() < 1 || u.size() < 1 || u.size() < v.size()) { u.clear(); v.clear(); continue; }
 		else break;
 	}
 	//Инициализация и заполнение массива
