@@ -3,7 +3,7 @@
 #include <queue>
 using namespace std;
 
-int** G, len, *pairU, *pairV, *dist;
+int **G, len, * pairU, * pairV, * dist;
 vector <int> u, v;
 
 void printG() {
@@ -32,52 +32,52 @@ bool find_part(int s) {
 
 void creatG() {
 	//Ввод длины графа
-	while(1){
-		cout << "\n\tВведите длину графа: ";
-		cin >> len;
-		if (len <= 1) cout << "\n\tНекорректно введенные данные, попробуйте снова!\n";
-		else break;
-	}
-	srand(time(0));
-	//Распределение вершин по подмножествам
-	while(1){
+		while (1) {
+			cout << "\n\tВведите длину графа: ";
+			cin >> len;
+			if (len <= 1) cout << "\n\tНекорректно введенные данные, попробуйте снова!\n";
+			else break;
+		}
+		srand(time(0));
+		//Распределение вершин по подмножествам
+		while(1){
+			for (int i = 0; i < len; i++) {
+				if (rand() % 11 > 5) u.push_back(i + 1);
+				else v.push_back(i + 1);
+			}
+			if (v.size() < 1 || u.size() < 1 || u.size() < v.size()) { u.clear(); v.clear(); continue; }
+			else break;
+		}
+		//Инициализация и заполнение массива
+		G = new int* [len];
 		for (int i = 0; i < len; i++) {
-			if (rand() % 11 > 5) u.push_back(i + 1);
-			else v.push_back(i + 1);
+			G[i] = new int[len];
 		}
-		if (v.size() < 1 || u.size() < 1 || u.size() < v.size()) { u.clear(); v.clear(); continue; }
-		else break;
-	}
-	//Инициализация и заполнение массива
-	G = new int* [len];
-	for (int i = 0; i < len; i++) {
-		G[i] = new int[len];
-	}
-	for (int i = 0; i < len; i++)
-		for (int j = 0; j < len; j++)
-			G[i][j] = 0;
+		for (int i = 0; i < len; i++)
+			for (int j = 0; j < len; j++)
+				G[i][j] = 0;
 
-	//Проложение путей между вершинами
-	vector <int>::iterator j;
-	srand(time(0));
-	for (int i = 0; i < len; i++) {
-		if (find_part(i + 1)){
-			for (j = u.begin(); j != u.end(); ++j) {
-				int s = *j;
-				if (s - 1 == i) continue;
-				if (rand() % 11 < 5) G[i][s - 1] = G[s - 1][i] = 1;
+		//Проложение путей между вершинами
+		vector <int>::iterator j;
+		srand(time(0));
+		for (int i = 0; i < len; i++) {
+			if (find_part(i + 1)){
+				for (j = u.begin(); j != u.end(); ++j) {
+					int s = *j;
+					if (s - 1 == i) continue;
+					if (rand() % 11 < 5) G[i][s - 1] = G[s - 1][i] = 1;
+				}
+			}
+			else {
+				for (j = v.begin(); j != v.end(); ++j) {
+					int s = *j;
+					if (s - 1 == i) continue;
+					if (rand() % 11 < 5)	G[i][s - 1] = G[s - 1][i] = 1;
+				}
 			}
 		}
-		else {
-			for (j = v.begin(); j != v.end(); ++j) {
-				int s = *j;
-				if (s - 1 == i) continue;
-				if (rand() % 11 < 5)	G[i][s - 1] = G[s - 1][i] = 1;
-			}
-		}
+		printG();
 	}
-	printG();
-}
 
 bool bfs(){
 	queue <int> q;
@@ -170,9 +170,15 @@ void menu() {
 			case(1): {
 				creatG();
 				cout << "\n\n\tМаксимальное паросочитание равно: " << Hopkroft_Karp_alg() << "\n\n";
-				cout << "\tЗапустить данный алгоритм ещё раз? \n\t1 - Да\n\t0 - Нет\n\tВаш выбор: ";
+				cout << "\tПары из паросочетания: \n";
+				for (int i = 1; i <= u.size(); i++) {
+					if (pairU[i] != 0) {
+						cout << "\t(" << u[i - 1] << ", " << pairU[i] + 1 << ")\n";
+					}
+				}
+				cout << "\n\tЗапустить данный алгоритм ещё раз? \n\t1 - Да\n\t0 - Нет\n\tВаш выбор: ";
 				cin >> n;
-				if (n) { zeroing(); menu(); }
+				if (n == 1) { zeroing(); menu(); }
 				else exit(0);
 			}
 			case(2): {
